@@ -2,7 +2,7 @@
 
 
 # import libraries
-
+import pandas as pd
 
 
 
@@ -15,7 +15,8 @@ def import_data(pth):
     output:
             df: pandas dataframe
     '''
-	pass
+    df = pd.read_csv(pth)
+    return df
 
 
 def perform_eda(df):
@@ -27,7 +28,7 @@ def perform_eda(df):
     output:
             None
     '''
-	pass
+    pass
 
 
 def encoder_helper(df, category_lst, response):
