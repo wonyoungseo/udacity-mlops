@@ -1,11 +1,37 @@
 #!/usr/bin/env python
+
+'''
+# running own script
+python download_data.py \
+       --file_url https://raw.githubusercontent.com/scikit-learn/scikit-learn/4dfdfb4e1bb3719628753a4ece995a1b2fa5312a/sklearn/datasets/data/iris.csv \
+       --artifact_name iris \
+       --artifact_type raw_data \
+       --artifact_description "The sklearn IRIS dataset"
+
+# run on mlflow
+mlflow run . \
+            -P file_url=https://raw.githubusercontent.com/scikit-learn/scikit-learn/4dfdfb4e1bb3719628753a4ece995a1b2fa5312a/sklearn/datasets/data/iris.csv \
+            -P artifact_name=iris \
+            -P artifact_type=raw_data \
+            -P artifact_description="The sklearn IRIS dataset"
+
+
+# run mlflow project but without conda
+mlflow run --no-conda . \
+            -P file_url=https://raw.githubusercontent.com/scikit-learn/scikit-learn/4dfdfb4e1bb3719628753a4ece995a1b2fa5312a/sklearn/datasets/data/iris.csv \
+            -P artifact_name=iris \
+            -P artifact_type=raw_data \
+            -P artifact_description="The sklearn IRIS dataset"
+
+
+'''
+
 import argparse
 import logging
 import pathlib
 import wandb
 import requests
 import tempfile
-
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
