@@ -1,5 +1,13 @@
+'''
+This file is a set of functions performing tests and logging on churn library script
+
+author: Wonyoung Seo
+date: Sep 28, 2021
+'''
+
 import os
 import logging
+import churn_library as cls
 
 logging.basicConfig(
     filename='logs/churn_library.log',
@@ -51,11 +59,7 @@ def test_train_models(train_models):
 
 
 if __name__ == "__main__":
-	pass
-
-
-
-
+	DATA_FRAME = test_import(cls.import_data)
 
 
 
