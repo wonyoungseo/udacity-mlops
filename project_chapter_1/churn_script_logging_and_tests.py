@@ -40,9 +40,21 @@ def test_eda(perform_eda):
 	'''
 
 
-def test_encoder_helper(encoder_helper):
+def test_encode_churn_target_var(encode_churn_target_var, df, target_col):
 	'''
-	test encoder helper
+	test encoding churn target variable
+	'''
+	try:
+		df = encode_churn_target_var(df, target_col, 'Churn')
+		logging.info("Testing target variable encoding: SUCCESS")
+	except KeyError as err:
+		logging.error("Testing target variable encoding: Target column '{}' does not exist in dataset".format(target_col))
+		raise err
+
+
+def test_encoder_cat_col(encoder_cat_col):
+	'''
+	test categorical column encoder
 	'''
 
 
