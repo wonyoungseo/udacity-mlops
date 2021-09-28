@@ -21,7 +21,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import plot_roc_curve, classification_report
-import shap
+# import shap
 
 
 logging.basicConfig(
@@ -53,7 +53,7 @@ def import_data(pth: str) -> pd.DataFrame:
     return df
 
 
-def encode_churn_target_var(df: pd.DataFrame, target_var_col: str, response: str) -> pd.DataFrame:
+def encoder_churn_target_var(df: pd.DataFrame, target_col: str, target_val: str, response: str) -> pd.DataFrame:
     '''
     function to convert churn column into target variable
 
@@ -65,12 +65,13 @@ def encode_churn_target_var(df: pd.DataFrame, target_var_col: str, response: str
     output:
             df: pandas dataframe
     '''
-    df[response] = df[target_var_col].apply(lambda val: 0 if val == "Existing Customer" else 1)
+    assert target_val in df[target_col].unique(), "Value '{}' does not exist in target column '{}'".format(target_val, target_col)
+    df[response] = df[target_col].apply(lambda val: 0 if val == target_val else 1)
     return df
 
 
 
-def encoder_helper(df, category_lst, response):
+def encoder_cat_col(df, category_lst, response):
     '''
     helper function to turn each categorical column into a new column with
     propotion of churn for each category - associated with cell 15 from the notebook
@@ -443,16 +444,17 @@ if __name__ == "__main__":
     df = import_data(constant['file_path']['dataset'])
 
 
-    df = encode_churn_target_var(df, 'Attrition_Flag', constant['target_var'])
+    df = encoder_churn_target_var(df,
+                                 constant['target_col'],
+                                 constant['target_col_encode_val'],
+                                 constant['target_var_name'])
+
     cat_columns = constant['categorical_cols']
-    df = encoder_helper(df, cat_columns, 'Churn')
+    df = encoder_cat_col(df, cat_columns, 'Churn')
 
-
-    keep_cols = constant['feature_var']
-    target_col = constant['target_var']
     X_train, X_test, y_train, y_test = perform_feature_engineering(df,
-                                                                   X_cols=keep_cols,
-                                                                   y_col=target_col)
+                                                                   X_cols=constant['feature_cols'],
+                                                                   y_col=constant['target_var_name'])
 
 
     # Train model
@@ -460,7 +462,7 @@ if __name__ == "__main__":
     model_wrapper = ChurnModel()
 
     ## specify model type
-    model_type = 'rfc'
+    model_type_ls = contant['']
 
     ## perform model training, store results, store model object in pkl
     model_wrapper.train(model_type,
