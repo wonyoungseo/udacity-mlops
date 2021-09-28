@@ -1,5 +1,5 @@
 '''
-Set of functions for customer churn predction project
+This file is a set of functions for customer churn predction project
 
 Auther: Wonyoung Seo
 Date: Sep 27, 2021
@@ -435,3 +435,37 @@ class ChurnModel(PlotGenerator):
         '''
         model = joblib.load(model_path)
         return model
+
+
+
+if __name__ == "__main__":
+    constant = read_json('constant.json')
+    df = import_data(constant['file_path']['dataset'])
+
+
+    df = encode_churn_target_var(df, 'Attrition_Flag', constant['target_var'])
+    cat_columns = constant['categorical_cols']
+    df = encoder_helper(df, cat_columns, 'Churn')
+
+
+    keep_cols = constant['feature_var']
+    target_col = constant['target_var']
+    X_train, X_test, y_train, y_test = perform_feature_engineering(df,
+                                                                   X_cols=keep_cols,
+                                                                   y_col=target_col)
+
+
+    # Train model
+    ## Initialize model class
+    model_wrapper = ChurnModel()
+
+    ## specify model type
+    model_type = 'rfc'
+
+    ## perform model training, store results, store model object in pkl
+    model_wrapper.train(model_type,
+                        X_train, X_test, y_train, y_test,
+                        cv_perform=True,
+                        cv_param_grid=constant['param_grid_search'],
+                        cv_num=constant['num_cross_validation'])
+
