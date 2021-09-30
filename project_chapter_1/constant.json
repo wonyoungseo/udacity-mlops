@@ -15,6 +15,10 @@
   "target_col" : "Attrition_Flag",
   "target_col_encode_val" : "Existing Customer",
   "target_var_name" : "Churn",
+  "model_type_name_mapping" : {
+      "rfc": "Random Forest",
+      "lrc": "Logistic Regression"
+  },
   "param_grid_search" : {
     "n_estimators" : [200, 500],
     "max_features" : ["auto", "sqrt"],

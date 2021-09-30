@@ -298,6 +298,7 @@ class ChurnModel(PlotGenerator):
 
     def train(self,
               model_type: str,
+              model_name: str,
               X_train,
               X_test,
               y_train,
@@ -309,7 +310,8 @@ class ChurnModel(PlotGenerator):
         train and store model and model performance record
 
         input:
-                model_type: str.
+                model_type: str
+                model_name: str
                 X_train: train dataset
                 X_test: test dataset
                 y_train: train target set
@@ -322,8 +324,6 @@ class ChurnModel(PlotGenerator):
                 None
         '''
 
-        model_name_dict = {'rfc': 'Random Forest',
-                           'lrc': 'Logistic Regression'}
         model_name = model_name_dict[model_type]
 
         model = self._init_model(model_type, self.random_state)
@@ -461,13 +461,12 @@ if __name__ == "__main__":
     ## Initialize model class
     model_wrapper = ChurnModel()
 
-    ## specify model type
-    model_type_ls = contant['']
-
     ## perform model training, store results, store model object in pkl
-    model_wrapper.train(model_type,
-                        X_train, X_test, y_train, y_test,
-                        cv_perform=True,
-                        cv_param_grid=constant['param_grid_search'],
-                        cv_num=constant['num_cross_validation'])
+    for model_type in constant['model_type_name_mapping'].keys():
+        model_wrapper.train(model_type,
+                            constant['model_type_name_mapping'][model_type],
+                            X_train, X_test, y_train, y_test,
+                            cv_perform=True,
+                            cv_param_grid=constant['param_grid_search'],
+                            cv_num=constant['num_cross_validation'])
 
