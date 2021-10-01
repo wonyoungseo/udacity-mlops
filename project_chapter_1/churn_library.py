@@ -14,6 +14,7 @@ import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns; sns.set()
 
 from sklearn.preprocessing import normalize
 from sklearn.model_selection import train_test_split
@@ -53,47 +54,52 @@ def import_data(pth: str) -> pd.DataFrame:
     return df
 
 
-def encoder_churn_target_var(df: pd.DataFrame, target_col: str, target_val: str, response: str) -> pd.DataFrame:
-    '''
-    function to convert churn column into target variable
+class encoder_helper:
 
-    inputs:
-            df: pandas dataframe.
-            target_var_col: string.
-            reponse: string.
+    def __init__(self):
+        pass
 
-    output:
-            df: pandas dataframe
-    '''
-    assert target_val in df[target_col].unique(), "Value '{}' does not exist in target column '{}'".format(target_val, target_col)
-    df[response] = df[target_col].apply(lambda val: 0 if val == target_val else 1)
-    return df
+    def encode_churn_target_var(self, df: pd.DataFrame, target_col: str, target_val: str, response: str) -> pd.DataFrame:
+        '''
+        function to convert churn column into target variable
+
+        inputs:
+                df: pandas dataframe.
+                target_var_col: string.
+                reponse: string.
+
+        output:
+                df: pandas dataframe
+        '''
+        assert target_val in df[target_col].unique(), "Value '{}' does not exist in target column '{}'".format(target_val, target_col)
+        df[response] = df[target_col].apply(lambda val: 0 if val == target_val else 1)
+        return df
 
 
 
-def encoder_cat_col(df, category_lst, response):
-    '''
-    helper function to turn each categorical column into a new column with
-    propotion of churn for each category - associated with cell 15 from the notebook
+    def encode_cat_col(self, df, category_lst, response) -> pd.DataFrame:
+        '''
+        helper function to turn each categorical column into a new column with
+        propotion of churn for each category - associated with cell 15 from the notebook
 
-    input:
-            df: pandas dataframe
-            category_lst: list of columns that contain categorical features
-            response: string of response name [optional argument that could be used for naming variables or index y column]
+        input:
+                df: pandas dataframe
+                category_lst: list of columns that contain categorical features
+                response: string of response name [optional argument that could be used for naming variables or index y column]
 
-    output:
-            df: pandas dataframe with new columns for
-    '''
+        output:
+                df: pandas dataframe with new columns for
+        '''
 
-    for cat in category_lst:
+        for cat in category_lst:
 
-        encoded_lst = []
-        group = df.groupby(cat).mean()[response]
-        for val in df[cat]:
-            encoded_lst.append(group.loc[val])
-        df['{}_{}'.format(cat, response)] = encoded_lst
+            encoded_lst = []
+            group = df.groupby(cat).mean()[response]
+            for val in df[cat]:
+                encoded_lst.append(group.loc[val])
+            df['{}_{}'.format(cat, response)] = encoded_lst
 
-    return df
+        return df
 
 
 def perform_feature_engineering(df, X_cols: List[str], y_col: str, test_size: float = 0.3):
@@ -132,14 +138,14 @@ class PlotGenerator:
     def __init__(self, plot_file_path:str):
         self.plot_path = plot_file_path
 
-    def _save_plot(self, plt_object, model_type, plot_type):
+    def _save_plot(self, plt_object, prefix: str, plot_type: str):
         '''
         function to save the generated plot
 
         input:
                 plt_object:
-                model_type:
-                plot_type:
+                prefix: str
+                plot_type: str
 
         output:
                 None
@@ -149,6 +155,42 @@ class PlotGenerator:
         plt_object.savefig(file_path, bbox_inches='tight')
         plt_object.close()
         logging.info("Plot saved '{}'".format(file_path))
+
+    def plot_hist(self, df, col_name):
+        '''
+        creates and store histogram plot on given column
+        '''
+        plt.figure()
+        ax = plt.gcf()
+        df[col_name].hist()
+        self._save_plot(plt, col_name, plot_type='histogram')
+
+    def plot_bar(self, df, col_name):
+        '''
+        creates and store bar plot on given column
+        '''
+        plt.figure()
+        ax = plt.gcf()
+        df[col_name].value_counts('normalize').plot(kind='bar')
+        self._save_plot(plt, col_name, plot_type='bar')
+
+    def plot_dist(self, df, col_name):
+        '''
+        creates and store distribution plot on given column
+        '''
+        plt.figure()
+        ax = plt.gcf()
+        sns.distplot(df[col_name]);
+        self._save_plot(plt, col_name, plot_type='distribution')
+
+    def plot_corr_heatmap(self, df, color_map='Dark2_r'):
+        '''
+        creates and store heatmap on given data
+        '''
+        plt.figure()
+        ax = plt.gcf()
+        sns.heatmap(df.corr(), annot=False, cmap=color_map, linewidths=2)
+        self._save_plot(plt, 'corr', plot_type='heatmap')
 
 
     def plot_classification_report(self, model_name, y_train, y_train_preds, y_test, y_test_preds):
@@ -261,7 +303,7 @@ class PlotGenerator:
         self._save_plot(plt, model_name, 'feature_importance')
 
 
-class EDA_Helper:
+class EDA_Helper(PlotGenerator):
     '''
     perform eda on df and save figures to images folder
     '''
@@ -443,14 +485,12 @@ if __name__ == "__main__":
     constant = read_json('constant.json')
     df = import_data(constant['file_path']['dataset'])
 
-
-    df = encoder_churn_target_var(df,
-                                 constant['target_col'],
-                                 constant['target_col_encode_val'],
-                                 constant['target_var_name'])
-
-    cat_columns = constant['categorical_cols']
-    df = encoder_cat_col(df, cat_columns, 'Churn')
+    encoder = encoder_helper()
+    df = encoder.encode_churn_target_var(df,
+                                         constant['target_col'],
+                                         constant['target_col_encode_val'],
+                                         constant['target_var_name'])
+    df = encoder.encode_cat_col(df, constant['categorical_cols'], 'Churn')
 
     X_train, X_test, y_train, y_test = perform_feature_engineering(df,
                                                                    X_cols=constant['feature_cols'],
