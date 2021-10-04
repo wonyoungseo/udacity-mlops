@@ -2,7 +2,7 @@
   "file_path" : {
     "dataset" : "./data/bank_data.csv",
     "model" : "./models/",
-    "image" : "./image/"
+    "image" : "./images/"
   },
   "categorical_cols" : ["Gender", "Education_Level", "Marital_Status", "Income_Category", "Card_Category"],
   "feature_cols" : ["Customer_Age", "Dependent_count", "Months_on_book",
@@ -15,15 +15,21 @@
   "target_col" : "Attrition_Flag",
   "target_col_encode_val" : "Existing Customer",
   "target_var_name" : "Churn",
-  "model_type_name_mapping" : {
-      "rfc": "Random Forest",
-      "lrc": "Logistic Regression"
-  },
-  "param_grid_search" : {
-    "n_estimators" : [200, 500],
-    "max_features" : ["auto", "sqrt"],
-    "max_depth" : [4, 5, 100],
-    "criterion" : ["gini", "entropy"]
-  },
-  "num_cross_validation" : 2
+  "model_config" : {
+      "rfc": {
+        "model_name" : "Random Forest",
+        "cv_perform" : true,
+        "param_grid_search" : {
+          "n_estimators" : [200, 500],
+          "max_features" : ["auto", "sqrt"],
+          "max_depth" : [4, 5, 100],
+          "criterion" : ["gini", "entropy"]
+        },
+        "num_cross_validation" : 2
+        },
+      "lrc": {
+        "model_name" : "Logistic Regression",
+        "cv_perform" : false
+      }
+  }
 }
