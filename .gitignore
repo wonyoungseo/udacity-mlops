@@ -194,3 +194,5 @@ pip-selfcheck.json
 # auth and log
 mlruns/
 wandb/
+outputs/
+artifacts/
