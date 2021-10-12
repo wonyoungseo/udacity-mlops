@@ -195,5 +195,5 @@ pip-selfcheck.json
 mlruns/
 wandb/
 outputs/
-artifacts/\
+artifacts/
 *.csv
