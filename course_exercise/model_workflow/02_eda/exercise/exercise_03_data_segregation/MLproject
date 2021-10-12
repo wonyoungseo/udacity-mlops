@@ -1,0 +1,28 @@
+name: split_data
+
+entry_points:
+  main:
+    parameters:
+      input_artifact:
+        type: str
+      artifact_name_root:
+        type: str
+      artifact_type:
+        type: str
+        default: "raw_data"
+      test_size:
+        type: float
+      random_state:
+        type: str
+        default: 42
+      stratify:
+        type: str
+        default: "null"
+
+    command: >-
+      python run.py --input_artifact {input_artifact} \
+                    --artifact_name_root {artifact_name_root} \
+                    --artifact_type {artifact_type} \
+                    --test_size {test_size} \
+                    --random_state {random_state} \
+                    --stratify {stratify}
