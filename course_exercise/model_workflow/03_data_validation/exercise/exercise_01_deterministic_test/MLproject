@@ -1,0 +1,7 @@
+name: validate_data
+
+entry_points:
+  main:
+    # -s is shortcut for --capture=no
+    command: >-
+      pytest -s -vv .
