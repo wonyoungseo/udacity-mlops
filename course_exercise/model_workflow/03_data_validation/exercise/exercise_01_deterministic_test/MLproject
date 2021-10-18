@@ -1,4 +1,4 @@
-name: validate_data
+name: validate_data_deterministic
 
 entry_points:
   main:
