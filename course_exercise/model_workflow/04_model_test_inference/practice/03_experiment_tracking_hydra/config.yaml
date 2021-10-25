@@ -1,0 +1,7 @@
+main:
+  project: hydra_sweep
+  experiment_name: dev
+perameters:
+  a: 1
+  b: 5
+
