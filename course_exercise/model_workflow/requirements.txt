@@ -10,4 +10,5 @@ pillow==8.1.2
 hydra-core==1.1.1
 pyarrow==5.0.0
 fastparquet==0.7.1
-pandas-profilㄹ5D1ing==3.0.0
+pandas-profiling==3.0.0
+hydra-joblib-launcher==1.1.5

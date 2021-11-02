@@ -4,9 +4,9 @@ entry_points:
   main:
     parameters:
       hydra_options:
-        description: hydra parameters to override
+        description: Hydra parameters to override
         type: str
         default: ''
 
     command: >-
-      python main.py $(echo {hydra_options})
+      python track_experiment_hydra_sweep.py $(echo {hydra_options})

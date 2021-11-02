@@ -1,7 +1,6 @@
 main:
-  project: hydra_sweep
+  project_name: hydra_sweep
   experiment_name: dev
-perameters:
+parameters:
   a: 1
   b: 5
-

@@ -2,7 +2,7 @@ import os
 import json
 
 import hydra
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import mlflow
 
 
@@ -19,7 +19,7 @@ def go(config: DictConfig):
     # Serialize random forest configuration
     model_config = os.path.abspath("random_forest_config.json")
     with open(model_config, "w+") as fp:
-        json.dump(dict(config['random_forest']), fp)
+        fp.write(OmegaConf.to_yaml(config['random_forest_pipeline']))
 
     _ = mlflow.run(
         os.path.join(root_path, "model_train_random_forest"),
