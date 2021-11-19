@@ -28,3 +28,6 @@ mlflow run --no-conda .
 
 - `mlflow run -v 1.0.0 [URL of your Github repo]`
 - Q. Is this work in private repository? Need to try it out.
+
+
+## 6. Deploy MLflow pipeline
