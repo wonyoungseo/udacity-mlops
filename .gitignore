@@ -191,4 +191,7 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
-# auth and log
+# DVC
+**/.dvc/
+**/.dvcignore
+**/local_remote
