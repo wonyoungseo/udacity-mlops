@@ -3,14 +3,14 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-class Message(BaseModel):
-    message: str
+class Value(BaseModel):
+    value: int
+
+@app.get("/")
+async def say_hello():
+    return {"greeting": "Hello World!"}
 
 
-@app.post("/test/{test_id}")
-async def exercise_function(test_id: str, query: int, test_message: Message):
-    return {
-        "path": test_id,
-        "query": query,
-        "body": test_message
-    }
+@app.post("/{path}")
+async def exercise_function(path: int, query: int, body: Value):
+    return {"path": path, "query": query, "body": body}
