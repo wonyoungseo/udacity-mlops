@@ -1,0 +1,7 @@
+2021-09-12 12:26:29,351 - ERROR - root - divide_vals - Division FAILED: type needs to be float and denominator cannot be zero.
+2021-09-12 12:26:29,351 - INFO - root - divide_vals - Division SUCCESS
+2021-09-12 12:26:29,351 - INFO - root - divide_vals - Division SUCCESS
+2021-09-12 12:26:29,351 - ERROR - root - divide_vals - Division FAILED: type needs to be float and denominator cannot be zero.
+2021-09-12 12:26:29,351 - ERROR - root - num_words - Counting number of words FAILED: The type needs to be a string
+2021-09-12 12:26:29,351 - INFO - root - num_words - Counting number of words: SUCCESS
+2021-09-12 12:26:29,351 - INFO - root - num_words - Counting number of words: SUCCESS

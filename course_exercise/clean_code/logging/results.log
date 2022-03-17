@@ -1,0 +1,3 @@
+2021-09-09 16:44:46,688 - INFO - root - sum_vals - Input Type: val_1 - <class 'str'> // val_2 - <class 'str'>
+2021-09-09 16:44:46,688 - ERROR - root - sum_vals - ERROR: Both input val_1, val_2 must be integer.
+2021-09-09 16:44:46,688 - INFO - root - sum_vals - SUCCESS: Summing input values
