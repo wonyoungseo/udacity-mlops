@@ -1,0 +1,17 @@
+pytest
+requests
+matplotlib
+seaborn
+pandas
+scikit-learn
+pillow
+pyyaml
+wandb
+mlflow
+dvc
+hydra-core
+omegaconf
+pyarrow
+fastparquet
+pandas-profiling
+hydra-joblib-launcher

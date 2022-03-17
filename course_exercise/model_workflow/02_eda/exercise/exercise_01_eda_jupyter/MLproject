@@ -1,0 +1,6 @@
+name: download_data
+
+entry_points:
+  main:
+    command: >-
+      jupyter notebook

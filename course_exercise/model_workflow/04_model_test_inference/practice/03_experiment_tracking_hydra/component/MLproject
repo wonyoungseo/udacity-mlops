@@ -1,0 +1,14 @@
+name: hydra_sweep
+
+entry_points:
+  main:
+    parameters:
+      a:
+        description: first parameter
+        type: float
+      b:
+        description: second parameter
+        type: float
+
+    command: >-
+      python test.py --a {a} --b {b}
