@@ -192,3 +192,9 @@ pyvenv.cfg
 pip-selfcheck.json
 
 # auth and log
+mlruns/
+wandb/
+outputs/
+artifacts/
+multirun/
+*.csv
